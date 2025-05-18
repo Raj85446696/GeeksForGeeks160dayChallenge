@@ -1,22 +1,19 @@
-import java.util.* ; 
-class Solution{
-    public List<Integer> findMajority(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>(); 
-        int n = nums.length/3 ; 
-        List<Integer> newArr = new ArrayList<>(); 
-        for(int elm : nums){
-            map.put(elm, map.getOrDefault(elm, 0)+1);
+import java.util.HashMap;
+import java.util.Map;
+
+class MajorityElement{
+    public static int majorityElement(int[] nums) {
+        Map<Integer,Integer> map = new HashMap<>() ; 
+        for(int num : nums){
+            map.put(num,map.getOrDefault(num,0)+1);
+            if(map.get(num)>nums.length/2){
+                return num ; 
+            }
         }
-        for(int elm :map.keySet()){
-        if(map.get(elm)>n){
-            newArr.add(elm);
-        }
-        }
-        return newArr; 
-     }
+        return -1 ; 
+    }
     public static void main(String[] args) {
-        Solution s = new Solution(); 
-        int arr[] = {2, 1, 5, 5, 5, 5, 6, 6, 6, 6, 6}; 
-        System.out.println(s.findMajority(arr));
+        int[] nums = {3,2,3} ; 
+        System.out.println(majorityElement(nums));
     }
 }
