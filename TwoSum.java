@@ -16,11 +16,21 @@ public class TwoSum {
     return result ; 
     }
 
-
-    public 
+    // This is using hashMap
+    public ArrayList<Integer> twosum(int[] arr,int target){
+        Map<Integer,Integer> map = new HashMap<>(); 
+        for(int a = 0 ; a<arr.length ; a++){
+            int comp = target-arr[a];
+            if(map.containsKey(comp)){
+                return new ArrayList<>(Arrays.asList(map.get(comp),a));
+            }map.put(arr[a],a);
+        }
+        return new ArrayList<>(Arrays.asList(-1,-1));
+    }
     public static void main(String[] args) {
         int arr[] = {1,2,3,4,5};
         TwoSum t = new TwoSum(); 
         System.out.println(t.twoSum(arr, 6));
+        System.out.println(t.twosum(arr, 7));
     }
 }
