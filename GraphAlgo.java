@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class GraphAlgo {
 
     class Edge {
@@ -63,6 +62,58 @@ public class GraphAlgo {
         }
     }
 
+
+    public void bellmanFord(ArrayList<Edge> graph[] , int src , int V){
+        int dist[] = new int[V] ;
+        for(int i = 0 ; i < V ; i++){
+            if(i!=src){
+                dist[i] = Integer.MAX_VALUE ; 
+            }
+        } 
+        for(int k = 0 ; k<V-1; k++){
+            for(int i = 0 ; i<V ; i++){
+                for(int j = 0 ; j<graph[i].size() ; j++){
+                    Edge e = graph[i].get(j);
+                    int u = e.src ; 
+                    int v = e.dest ; 
+
+                    if(dist[u]!=Integer.MAX_VALUE && dist[u]+e.weight<dist[v]){
+                        dist[v] = dist[u]+e.weight ; 
+                    }
+                }
+            }
+        }
+
+        for(int i = 0 ; i<dist.length ;i++){
+            System.out.print(dist[i]+" ");
+        }
+        System.out.println(" ");
+
+    }
+
+
+    public void PrimsAlgoritms(ArrayList<Edge> graph[],int V){
+        PriorityQueue<Pair> pq = new PriorityQueue<>(); 
+        boolean vis[] = new boolean[V];
+        pq.add(new Pair(0, 0));
+        int mstCost = 0 ; 
+        while(!pq.isEmpty()){
+            Pair curr = pq.remove(); 
+            if(!vis[curr.node]){
+                vis[curr.node] = true ; 
+                mstCost+=curr.dist ;
+            }
+            for(int i = 0 ; i<graph[curr.node].size();i++){
+                Edge e = graph[curr.node].get(i);
+                if(!vis[e.dest]){
+                    pq.add(new Pair(e.dest, e.weight));
+                }
+            }
+        }
+        System.out.println("Final cost is :- "+mstCost);
+    }
+
+
     public void createGraph(ArrayList<Edge> graph[]) {
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new ArrayList<>();
@@ -87,5 +138,8 @@ public class GraphAlgo {
         ArrayList<Edge> graph[] = new ArrayList[V];
         g.createGraph(graph);
         g.dijkstra(graph, 0, V);
+
+        g.bellmanFord(graph, 0, V);
+        g.PrimsAlgoritms(graph, V);
     }
 }
